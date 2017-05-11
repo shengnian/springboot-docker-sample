@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        maven { url 'http://repo2.maven.org/maven2' }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.3.RELEASE")
+        classpath('se.transmode.gradle:gradle-docker:1.2')
+    }
+}
+
+group 'shengnianos'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'docker'
+
+jar {
+    baseName = "shengnian-spring-boot-docker"
+    version = "0.1.0"
+}
+
+repositories {
+    maven { url 'http://repo2.maven.org/maven2' }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+task buildDocker (type: Docker, dependsOn: build) {
+    push = false
+    applicationName = jar.baseName
+    dockerfile = file ('src/main/docker/Dockerfile')
+
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}
