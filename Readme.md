@@ -1,12 +1,15 @@
 # Sample Spring boot with docker.
 
 ## Build project
+
 `$git clone https://github.com/shengnian/spring-boot-docker-sample.git`
+
 `$gradlew build && java -jar build/libs/shengnian-spring-boot-docker-0.1.0.jar`
 
 Go to http://localhost:8080 to see your "Hello Docker world!" message.
 
 ## Build docker
+
 `$gradlew build buildDocker`
 
 `$docker images` to see the docker container: `shengnianos/shengnian-spring-boot-docker`
